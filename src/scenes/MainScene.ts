@@ -1,4 +1,10 @@
+import Phaser from 'phaser';
+import { Direction } from 'grid-engine';
+import type { GridEngine } from 'grid-engine';
+
 export class MainScene extends Phaser.Scene {
+  gridEngine!: GridEngine;
+
   constructor() {
     super('MainScene');
   }
@@ -13,6 +19,8 @@ export class MainScene extends Phaser.Scene {
   }
 
   create() {
+    if (!this.gridEngine) return;
+
     const cloudCityTilemap = this.make.tilemap({ key: 'cloud-city-map' });
 
     cloudCityTilemap.addTilesetImage('Cloud City', 'tiles');
@@ -51,13 +59,13 @@ export class MainScene extends Phaser.Scene {
     const cursors = this.input.keyboard.createCursorKeys();
 
     if (cursors.left.isDown) {
-      this.gridEngine.move('player', 'left');
+      this.gridEngine.move('player', Direction.LEFT);
     } else if (cursors.right.isDown) {
-      this.gridEngine.move('player', 'right');
+      this.gridEngine.move('player', Direction.RIGHT);
     } else if (cursors.up.isDown) {
-      this.gridEngine.move('player', 'up');
+      this.gridEngine.move('player', Direction.UP);
     } else if (cursors.down.isDown) {
-      this.gridEngine.move('player', 'down');
+      this.gridEngine.move('player', Direction.DOWN);
     }
   }
 }
